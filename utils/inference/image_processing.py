@@ -24,7 +24,7 @@ def normalize_and_torch(image: np.ndarray) -> torch.tensor:
     """
     Normalize image and transform to torch
     """
-    image = torch.tensor(image.copy(), dtype=torch.float32).cuda()
+    image = torch.tensor(image.copy(), dtype=torch.float32)
     if image.max() > 1.:
         image = image/255.
     
@@ -38,7 +38,7 @@ def normalize_and_torch_batch(frames: np.ndarray) -> torch.tensor:
     """
     Normalize batch images and transform to torch
     """
-    batch_frames = torch.from_numpy(frames.copy()).cuda()
+    batch_frames = torch.from_numpy(frames.copy())
     if batch_frames.max() > 1.:
         batch_frames = batch_frames/255.
     

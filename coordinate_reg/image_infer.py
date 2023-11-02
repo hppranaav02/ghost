@@ -94,9 +94,9 @@ def trans_points(pts, M):
 
 
 class Handler:
-    def __init__(self, prefix, epoch, im_size=192, det_size=224, ctx_id=0, root='./insightface_func/models'):
+    def __init__(self, prefix, epoch, im_size=192, det_size=224, ctx_id=0, root='./insightface_func/models', cpu=False):
         print('loading', prefix, epoch)
-        if ctx_id >= 0:
+        if ctx_id >= 0 and not cpu:
             ctx = mx.gpu(ctx_id)
         else:
             ctx = mx.cpu()
