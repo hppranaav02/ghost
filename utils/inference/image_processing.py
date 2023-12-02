@@ -25,15 +25,14 @@ def crop_face(image_full: np.ndarray, app: Callable, crop_size: int) -> np.ndarr
         
     # return max size face
     selected_face = result
-    print("Faces found: ", len(result))
     if len(result) > 1:
         
         # find non-zero count for each image
         counts = [np.count_nonzero(r) for r in result]
         
         selected_face = result[np.argmax(counts)]
-    
-    return [selected_face]
+            
+    return selected_face
 
 
 def normalize_and_torch(image: np.ndarray) -> torch.tensor:

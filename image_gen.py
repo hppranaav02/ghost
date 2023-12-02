@@ -32,7 +32,11 @@ from pydantic import BaseModel
 from fastapi.responses import FileResponse
 from fastapi import File, UploadFile
 import base64
+import logging
 
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(level=logging.INFO)
 
 def get_app():
     app = fastapi.FastAPI()
@@ -84,8 +88,9 @@ class ImageGen:
         try:
             source = crop_face(source, self.app, crop_size)[0]
             source = [source[:, :, ::-1]]
-            print("Everything is ok!")
-        except TypeError:
+
+        except Exception as e:
+            logger.error(e)
             print("Bad source images")
 
         full_frames = [target]
