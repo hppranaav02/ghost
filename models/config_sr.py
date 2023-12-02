@@ -3,7 +3,7 @@ import sys
 class TestOptions(object):
     name = 'weights'
     results_dir = './results/'
-    gpu_ids = [0]
+    gpu_ids = []
     crop_size = 256
     dataset_mode = 'test'
     which_epoch = '10'

@@ -15,9 +15,25 @@ def crop_face(image_full: np.ndarray, app: Callable, crop_size: int) -> np.ndarr
     Crop face from image and resize
     """
     kps = app.get(image_full, crop_size)
-    M, _ = face_align.estimate_norm(kps[0], crop_size, mode ='None') 
-    align_img = cv2.warpAffine(image_full, M, (crop_size, crop_size), borderValue=0.0)         
-    return [align_img]
+    # do for all faces
+    
+    result = []
+    for i in range(len(kps)):
+        M, _ = face_align.estimate_norm(kps[i], crop_size, mode ='None')
+        align_img = cv2.warpAffine(image_full, M, (crop_size, crop_size), borderValue=0.0)
+        result.append(align_img)
+        
+    # return max size face
+    selected_face = result
+    print("Faces found: ", len(result))
+    if len(result) > 1:
+        
+        # find non-zero count for each image
+        counts = [np.count_nonzero(r) for r in result]
+        
+        selected_face = result[np.argmax(counts)]
+    
+    return [selected_face]
 
 
 def normalize_and_torch(image: np.ndarray) -> torch.tensor:
